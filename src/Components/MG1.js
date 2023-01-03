@@ -27,8 +27,22 @@ export default function MG1() {
   const [lq, setLq] = useState(0);
   const [w, setW] = useState(0);
   const [wq, setWq] = useState(0);
+  const [p, setP] = useState(0);
+
+  const [arrivalRate, setArrivalRate] = useState("");
+  const [serviceRate, setServiceRate] = useState("");
+  const [lemda, setLemda] = useState(0);
+  const [mue, setMue] = useState(0);
+
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("please enter");
 
   const handleSubmit = (event) => {
+    setP(0);
+    setL(0);
+    setLq(0);
+    setW(0);
+    setWq(0);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
@@ -38,24 +52,112 @@ export default function MG1() {
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-    const newLemda = lemda
-    const newMue = mue
 
-    const ro = newLemda / newMue
-    const theta = (lemda**2 - mue**2) / 12 
+    if (data.get("lemda") === "" || data.get("mue") === "") {
+      alert("Please enter required values");
+    } else if (data.get("lemda") >= data.get("mue")) {
+      alert(
+        "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
+      );
+    } else if (serviceRate === "" || arrivalRate === "") {
+      alert("please select rates");
+    } else {
+      const newLemda = lemda;
+      const newMue = mue;
 
-
-
-    setLq((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)));
-    setWq( ((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)))/ newLemda);
-    setW((((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)))/ newLemda) + ( 1 / newMue));
-    setL(newLemda * ((((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)))/ newLemda) + ( 1 / newMue)));
+      const ro = newLemda / newMue;
+      const theta = (lemda ** 2 - mue ** 2) / 12;
+      setP(ro)
+      setLq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)));
+      setWq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda);
+      setW(
+        (newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda +
+          1 / newMue
+      );
+      setL(
+        newLemda *
+          ((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda +
+            1 / newMue)
+      );
+    }
   };
 
-  const [age, setAge] = React.useState("");
+  const handleArrivalChange = (event) => {
+    setArrivalRate(event.target.value);
+    if (event.target.value === "No units") {
+      setLemda(0);
+    } else if (event.target.value === "Day") {
+      if (arrivalRate === "Hour") {
+        setLemda(lemda * 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 24 * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / (60 * 60));
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda / 60);
+      }
+    }
+  };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleServiceChange = (event) => {
+    setServiceRate(event.target.value);
+    if (event.target.value === "No units") {
+      setMue(0);
+    } else if (event.target.value === "Day") {
+      if (serviceRate === "Hour") {
+        setMue(mue * 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 24 * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (serviceRate === "Day") {
+        setMue(mue / 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / (60 * 60));
+      } else if (serviceRate === "Minute") {
+        setMue(mue / 60);
+      }
+    }
   };
 
   return (
@@ -65,32 +167,6 @@ export default function MG1() {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
-            {/* <Grid md={3}>
-              <Box
-                sx={{
-                  borderRadius: 2,
-                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                  padding: 3,
-                  mb: 5,
-                }}
-              >
-                <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
-                  Number of Servers ( C )
-                </Typography>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="servers"
-                  label="Number of Servers"
-                  name="servers"
-                  type="number"
-                />
-                <Typography sx={{ color: "gray", fontSize: 10 }}>
-                  Number of servers in parallel open to attend customers.
-                </Typography>
-              </Box>
-            </Grid> */}
             <Grid md={3}>
               {" "}
               <Box
@@ -112,6 +188,8 @@ export default function MG1() {
                     label="λ"
                     type="number"
                     id="lemda"
+                    value={lemda}
+                    onChange={(e) => setLemda(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -119,15 +197,15 @@ export default function MG1() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={arrivalRate}
                     label="Rate"
-                    onChange={handleChange}
+                    onChange={handleArrivalChange}
                   >
-                    <MenuItem value={10}>No Units</MenuItem>
-                    <MenuItem value={20}>Customer / Day </MenuItem>
-                    <MenuItem value={20}>Customer / Hour</MenuItem>
-                    <MenuItem value={20}>Customer / Minute</MenuItem>
-                    <MenuItem value={30}>Customer / Second</MenuItem>
+                    <MenuItem value={"No units"}>No Units</MenuItem>
+                    <MenuItem value={"Day"}>Customer / Day </MenuItem>
+                    <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+                    <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+                    <MenuItem value={"Second"}>Customer / Second</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -153,6 +231,8 @@ export default function MG1() {
                     label="μ"
                     type="number"
                     id="mue"
+                    value={mue}
+                    onChange={(e) => setMue(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -160,15 +240,15 @@ export default function MG1() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={serviceRate}
                     label="Rate"
-                    onChange={handleChange}
+                    onChange={handleServiceChange}
                   >
-                    <MenuItem value={10}>No Units</MenuItem>
-                    <MenuItem value={20}>Customer / Day </MenuItem>
-                    <MenuItem value={20}>Customer / Hour</MenuItem>
-                    <MenuItem value={20}>Customer / Minute</MenuItem>
-                    <MenuItem value={30}>Customer / Second</MenuItem>
+                    <MenuItem value={"No units"}>No Units</MenuItem>
+                    <MenuItem value={"Day"}>Customer / Day </MenuItem>
+                    <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+                    <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+                    <MenuItem value={"Second"}>Customer / Second</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -317,7 +397,7 @@ export default function MG1() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-               <CountUp
+              <CountUp
                 start={0}
                 end={w}
                 duration={2}
@@ -342,7 +422,7 @@ export default function MG1() {
                   display: "inline-flex",
                 }}
               >
-                No Units
+                {arrivalRate}
               </Typography>
             </Typography>
             <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
@@ -402,7 +482,7 @@ export default function MG1() {
                   display: "inline-flex",
                 }}
               >
-                No Units
+                {serviceRate}
               </Typography>
             </Typography>
             <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
@@ -437,7 +517,22 @@ export default function MG1() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-              0{" "}
+              <CountUp
+                start={0}
+                end={p}
+                duration={2}
+                separator=" "
+                decimals={5}
+                decimal="."
+                onEnd={() => console.log("Ended! 👏")}
+                onStart={() => console.log("Started! 💨")}
+              >
+                {({ countUpRef, start }) => (
+                  <div>
+                    <span ref={countUpRef} />
+                  </div>
+                )}
+              </CountUp>
               <Typography
                 sx={{
                   ml: 2,
@@ -465,35 +560,6 @@ export default function MG1() {
 
             <Typography sx={{ color: "gray" }}>
               Percentage of time a server is being utilized by a customer.{" "}
-            </Typography>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-          <Grid conatiner flexDirection="column">
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
-              λ'{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Lambda prime
-              </Typography>
-            </Typography>
-
-            <Typography sx={{ color: "gray" }}>
-              A value used in some calculations.
             </Typography>
           </Grid>
         </Box>

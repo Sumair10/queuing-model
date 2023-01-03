@@ -22,6 +22,7 @@ import { useCountUp } from "react-countup";
 const theme = createTheme();
 
 export default function MMC() {
+
   const countUpRef = React.useRef(null);
   const [l, setL] = useState(0);
   const [lq, setLq] = useState(0);
@@ -29,50 +30,143 @@ export default function MMC() {
   const [wq, setWq] = useState(0);
   const [p, setP] = useState(0);
 
+  const [arrivalRate, setArrivalRate] = useState("");
+  const [serviceRate, setServiceRate] = useState("");
+  const [lemda, setLemda] = useState(0);
+  const [mue, setMue] = useState(0);
+
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("please enter");
+
   const handleSubmit = (event) => {
+    setP(0);
+    setL(0);
+    setLq(0);
+    setW(0);
+    setWq(0);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
     const lemda = data.get("lemda");
     const servers = data.get("servers");
+
     console.log({
       servers: data.get("servers"),
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-    function factorialize(num) {
-      // If the number is less than 0, reject it.
-      if (num < 0) return -1;
-      // If the number is 0, its factorial is 1.
-      else if (num == 0) return 1;
-      // Otherwise, call the recursive procedure again
-      else {
-        return num * factorialize(num - 1);
+
+    if (data.get("lemda") === "" || data.get("mue") === "") {
+      alert("Please enter required values");
+    } else if (data.get("lemda") >= data.get("mue")) {
+      
+      alert(
+        "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
+      );
+    } else if (serviceRate === "" || arrivalRate === "") {
+      alert("please select rates");
+    } else {
+      function factorialize(num) {
+        // If the number is less than 0, reject it.
+        if (num < 0) return -1;
+        // If the number is 0, its factorial is 1.
+        else if (num == 0) return 1;
+        // Otherwise, call the recursive procedure again
+        else {
+          return num * factorialize(num - 1);
+        }
+      }
+  
+      const ro = lemda /( servers * mue)
+  
+      setP(ro)
+      setL(ro + ( (ro *( servers * ro )**servers) / ((1 - ro)**2 * factorialize(servers) ) ));
+      setW( ro + ( (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) ));
+      setWq(   (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) );
+      setLq(lemda *   (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) );
+    }
+  };
+
+  const handleArrivalChange = (event) => {
+    setArrivalRate(event.target.value);
+    if(event.target.value === "No units") {
+      setLemda(0);
+    }
+    else if (event.target.value === "Day") {
+      if (arrivalRate === "Hour") {
+        setLemda(lemda * 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 24 * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / (60 * 60));
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda / 60);
       }
     }
-
-    const ro = lemda /( servers * mue)
-
-    setP(ro)
-    setL(ro + ( (ro *( servers * ro )**servers) / ((1 - ro)**2 * factorialize(servers) ) ));
-    setW( ro + ( (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) ));
-    setWq(   (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) );
-    setLq(lemda *   (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) );
-    // setLq();
-    // setWq();
-    
-    // setLq( (lemda / mue)**2 / (1 - (lemda / mue)) );
-    // setWq((lemda**2 / mue**2) / (1 - (lemda / mue)) / lemda);
-    // setW( ((lemda**2 / mue**2) / (1 - (lemda / mue)) / lemda) + 1 /mue);
-    // setL(lemda *( ((lemda**2 / mue**2) / (1 - (lemda / mue)) / lemda) + 1 /mue));
   };
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleServiceChange = (event) => {
+    setServiceRate(event.target.value);
+    if(event.target.value === "No units") {
+      setMue(0);
+    }
+    else if (event.target.value === "Day") {
+      if (serviceRate === "Hour") {
+        setMue(mue * 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 24 * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (serviceRate === "Day") {
+        setMue(mue / 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / (60 * 60));
+      } else if (serviceRate === "Minute") {
+        setMue(mue / 60);
+      }
+    }
   };
-
+ 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
@@ -80,7 +174,7 @@ export default function MMC() {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
-            <Grid md={3}>
+          <Grid md={3}>
               <Box
                 sx={{
                   borderRadius: 2,
@@ -127,6 +221,8 @@ export default function MMC() {
                     label="λ"
                     type="number"
                     id="lemda"
+                    value={lemda}
+                    onChange={(e) => setLemda(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -134,15 +230,15 @@ export default function MMC() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={arrivalRate}
                     label="Rate"
-                    onChange={handleChange}
+                    onChange={handleArrivalChange}
                   >
-                    <MenuItem value={10}>No Units</MenuItem>
-                    <MenuItem value={20}>Customer / Day </MenuItem>
-                    <MenuItem value={20}>Customer / Hour</MenuItem>
-                    <MenuItem value={20}>Customer / Minute</MenuItem>
-                    <MenuItem value={30}>Customer / Second</MenuItem>
+                    <MenuItem value={"No units"}>No Units</MenuItem>
+                    <MenuItem value={"Day"}>Customer / Day </MenuItem>
+                    <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+                    <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+                    <MenuItem value={"Second"}>Customer / Second</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -168,6 +264,8 @@ export default function MMC() {
                     label="μ"
                     type="number"
                     id="mue"
+                    value={mue}
+                    onChange={(e) => setMue(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -175,15 +273,15 @@ export default function MMC() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={serviceRate}
                     label="Rate"
-                    onChange={handleChange}
+                    onChange={handleServiceChange}
                   >
-                    <MenuItem value={10}>No Units</MenuItem>
-                    <MenuItem value={20}>Customer / Day </MenuItem>
-                    <MenuItem value={20}>Customer / Hour</MenuItem>
-                    <MenuItem value={20}>Customer / Minute</MenuItem>
-                    <MenuItem value={30}>Customer / Second</MenuItem>
+                    <MenuItem value={"No units"}>No Units</MenuItem>
+                    <MenuItem value={"Day"}>Customer / Day </MenuItem>
+                    <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+                    <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+                    <MenuItem value={"Second"}>Customer / Second</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -332,7 +430,7 @@ export default function MMC() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-               <CountUp
+              <CountUp
                 start={0}
                 end={w}
                 duration={2}
@@ -357,7 +455,7 @@ export default function MMC() {
                   display: "inline-flex",
                 }}
               >
-                No Units
+                {arrivalRate}
               </Typography>
             </Typography>
             <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
@@ -417,7 +515,7 @@ export default function MMC() {
                   display: "inline-flex",
                 }}
               >
-                No Units
+                {serviceRate}
               </Typography>
             </Typography>
             <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
@@ -452,7 +550,7 @@ export default function MMC() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-                <CountUp
+              <CountUp
                 start={0}
                 end={p}
                 duration={2}
@@ -498,36 +596,8 @@ export default function MMC() {
             </Typography>
           </Grid>
         </Box>
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-          <Grid conatiner flexDirection="column">
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
-              λ'{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Lambda prime
-              </Typography>
-            </Typography>
-
-            <Typography sx={{ color: "gray" }}>
-              A value used in some calculations.
-            </Typography>
-          </Grid>
-        </Box>
       </Container>
     </ThemeProvider>
+    
   );
 }

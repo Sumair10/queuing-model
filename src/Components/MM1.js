@@ -33,6 +33,8 @@ export default function MM1() {
 
   const [arrivalRate, setArrivalRate] = useState("");
   const [serviceRate, setServiceRate] = useState("");
+  const [lemda, setLemda] = useState(0);
+  const [mue, setMue] = useState(0);
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
@@ -56,6 +58,7 @@ export default function MM1() {
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
     } else if (data.get("lemda") >= data.get("mue")) {
+      
       alert(
         "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
       );
@@ -72,10 +75,82 @@ export default function MM1() {
 
   const handleArrivalChange = (event) => {
     setArrivalRate(event.target.value);
+    if(event.target.value === "No units") {
+      setLemda(0);
+    }
+    else if (event.target.value === "Day") {
+      if (arrivalRate === "Hour") {
+        setLemda(lemda * 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 24 * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / (60 * 60));
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda / 60);
+      }
+    }
   };
 
   const handleServiceChange = (event) => {
     setServiceRate(event.target.value);
+    if(event.target.value === "No units") {
+      setMue(0);
+    }
+    else if (event.target.value === "Day") {
+      if (serviceRate === "Hour") {
+        setMue(mue * 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 24 * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (serviceRate === "Day") {
+        setMue(mue / 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / (60 * 60));
+      } else if (serviceRate === "Minute") {
+        setMue(mue / 60);
+      }
+    }
   };
 
   return (
@@ -106,6 +181,8 @@ export default function MM1() {
                     label="λ"
                     type="number"
                     id="lemda"
+                    value={lemda}
+                    onChange={(e) => setLemda(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -147,6 +224,8 @@ export default function MM1() {
                     label="μ"
                     type="number"
                     id="mue"
+                    value={mue}
+                    onChange={(e) => setMue(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>

@@ -27,47 +27,148 @@ export default function MGC() {
   const [lq, setLq] = useState(0);
   const [w, setW] = useState(0);
   const [wq, setWq] = useState(0);
-  const [p, setP] = useState(0)
+  const [p, setP] = useState(0);
+
+  const [arrivalRate, setArrivalRate] = useState("");
+  const [serviceRate, setServiceRate] = useState("");
+  const [lemda, setLemda] = useState(0);
+  const [mue, setMue] = useState(0);
+
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("please enter");
 
   const handleSubmit = (event) => {
+    setP(0);
+    setL(0);
+    setLq(0);
+    setW(0);
+    setWq(0);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
     const lemda = data.get("lemda");
     const servers = data.get("servers");
+
     console.log({
       servers: data.get("servers"),
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
 
-    function factorialize(num) {
-      // If the number is less than 0, reject it.
-      if (num < 0) return -1;
-      // If the number is 0, its factorial is 1.
-      else if (num == 0) return 1;
-      // Otherwise, call the recursive procedure again
-      else {
-        return num * factorialize(num - 1);
+    if (data.get("lemda") === "" || data.get("mue") === "") {
+      alert("Please enter required values");
+    } else if (data.get("lemda") >= data.get("mue")) {
+      alert(
+        "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
+      );
+    } else if (serviceRate === "" || arrivalRate === "") {
+      alert("please select rates");
+    } else {
+      function factorialize(num) {
+        // If the number is less than 0, reject it.
+        if (num < 0) return -1;
+        // If the number is 0, its factorial is 1.
+        else if (num == 0) return 1;
+        // Otherwise, call the recursive procedure again
+        else {
+          return num * factorialize(num - 1);
+        }
       }
-    }
-    var initialRo = lemda / mue
-    var ro = lemda / (servers * mue);
-    setP(ro)
-    var p0 =(  ( (initialRo)**0 / factorialize(0) ) + ((initialRo)**1 / factorialize(1)) + ((initialRo)**2 / factorialize(2))  +(ro / ( 1 - ro )) )
+      var initialRo = lemda / mue;
+      var ro = lemda / (servers * mue);
+      setP(ro);
+      var p0 =
+        initialRo ** 0 / factorialize(0) +
+        initialRo ** 1 / factorialize(1) +
+        initialRo ** 2 / factorialize(2) +
+        ro / (1 - ro);
 
-    const tempLq =    (p0 * initialRo**servers * ro )  / ( factorialize(servers) * ( 1 - ro )**2 )
-    setLq(tempLq)
-    setWq(tempLq / lemda)
-    setW( (tempLq / lemda) + (1 / mue))
-    setL( lemda * ((tempLq / lemda) + (1 / mue)))
-  
+      const tempLq =
+        (p0 * initialRo ** servers * ro) /
+        (factorialize(servers) * (1 - ro) ** 2);
+      setLq(tempLq);
+      setWq(tempLq / lemda);
+      setW(tempLq / lemda + 1 / mue);
+      setL(lemda * (tempLq / lemda + 1 / mue));
+    }
   };
 
-  const [age, setAge] = React.useState("");
+  const handleArrivalChange = (event) => {
+    setArrivalRate(event.target.value);
+    if (event.target.value === "No units") {
+      setLemda(0);
+    } else if (event.target.value === "Day") {
+      if (arrivalRate === "Hour") {
+        setLemda(lemda * 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 24 * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / 24);
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda * 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / 60);
+      } else if (arrivalRate === "Second") {
+        setLemda(lemda * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (arrivalRate === "Day") {
+        setLemda(lemda / (24 * 60 * 60));
+      } else if (arrivalRate === "Hour") {
+        setLemda(lemda / (60 * 60));
+      } else if (arrivalRate === "Minute") {
+        setLemda(lemda / 60);
+      }
+    }
+  };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleServiceChange = (event) => {
+    setServiceRate(event.target.value);
+    if (event.target.value === "No units") {
+      setMue(0);
+    } else if (event.target.value === "Day") {
+      if (serviceRate === "Hour") {
+        setMue(mue * 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 24 * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 24 * 60 * 60);
+      }
+    } else if (event.target.value === "Hour") {
+      if (serviceRate === "Day") {
+        setMue(mue / 24);
+      } else if (serviceRate === "Minute") {
+        setMue(mue * 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60 * 60);
+      }
+    } else if (event.target.value === "Minute") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / 60);
+      } else if (serviceRate === "Second") {
+        setMue(mue * 60);
+      }
+    } else if (event.target.value === "Second") {
+      if (serviceRate === "Day") {
+        setMue(mue / (24 * 60 * 60));
+      } else if (serviceRate === "Hour") {
+        setMue(mue / (60 * 60));
+      } else if (serviceRate === "Minute") {
+        setMue(mue / 60);
+      }
+    }
   };
 
   return (
@@ -94,9 +195,11 @@ export default function MGC() {
                   required
                   fullWidth
                   id="servers"
-                  label="Number of Servers"
+                  // label="Number of Servers"
                   name="servers"
                   type="number"
+                  value={2}
+                  disabled
                 />
                 <Typography sx={{ color: "gray", fontSize: 10 }}>
                   Number of servers in parallel open to attend customers.
@@ -124,6 +227,8 @@ export default function MGC() {
                     label="λ"
                     type="number"
                     id="lemda"
+                    value={lemda}
+                    onChange={(e) => setLemda(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -131,15 +236,15 @@ export default function MGC() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={arrivalRate}
                     label="Rate"
-                    onChange={handleChange}
+                    onChange={handleArrivalChange}
                   >
-                    <MenuItem value={10}>No Units</MenuItem>
-                    <MenuItem value={20}>Customer / Day </MenuItem>
-                    <MenuItem value={20}>Customer / Hour</MenuItem>
-                    <MenuItem value={20}>Customer / Minute</MenuItem>
-                    <MenuItem value={30}>Customer / Second</MenuItem>
+                    <MenuItem value={"No units"}>No Units</MenuItem>
+                    <MenuItem value={"Day"}>Customer / Day </MenuItem>
+                    <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+                    <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+                    <MenuItem value={"Second"}>Customer / Second</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -165,6 +270,8 @@ export default function MGC() {
                     label="μ"
                     type="number"
                     id="mue"
+                    value={mue}
+                    onChange={(e) => setMue(e.target.value)}
                   />
                 </Box>
                 <FormControl fullWidth>
@@ -172,15 +279,15 @@ export default function MGC() {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={serviceRate}
                     label="Rate"
-                    onChange={handleChange}
+                    onChange={handleServiceChange}
                   >
-                    <MenuItem value={10}>No Units</MenuItem>
-                    <MenuItem value={20}>Customer / Day </MenuItem>
-                    <MenuItem value={20}>Customer / Hour</MenuItem>
-                    <MenuItem value={20}>Customer / Minute</MenuItem>
-                    <MenuItem value={30}>Customer / Second</MenuItem>
+                    <MenuItem value={"No units"}>No Units</MenuItem>
+                    <MenuItem value={"Day"}>Customer / Day </MenuItem>
+                    <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+                    <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+                    <MenuItem value={"Second"}>Customer / Second</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -354,7 +461,7 @@ export default function MGC() {
                   display: "inline-flex",
                 }}
               >
-                No Units
+                {arrivalRate}
               </Typography>
             </Typography>
             <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
@@ -414,7 +521,7 @@ export default function MGC() {
                   display: "inline-flex",
                 }}
               >
-                No Units
+                {serviceRate}
               </Typography>
             </Typography>
             <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
@@ -449,7 +556,7 @@ export default function MGC() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-               <CountUp
+              <CountUp
                 start={0}
                 end={p}
                 duration={2}
@@ -495,7 +602,6 @@ export default function MGC() {
             </Typography>
           </Grid>
         </Box>
-       
       </Container>
     </ThemeProvider>
   );
