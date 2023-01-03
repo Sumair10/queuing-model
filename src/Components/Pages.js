@@ -6,6 +6,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import MM1 from './MM1';
 import MG1 from './MG1';
+import MMC from './MMC';
+import MGC from './MGC';
 
 export default function LabTabs() {
   const [value, setValue] = React.useState('1');
@@ -19,16 +21,16 @@ export default function LabTabs() {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="M/M/C" value="1" />
-            <Tab label="M/G/1" value="2" />
-            <Tab label="M/M/C/K" value="3" />
-            <Tab label="M/M/C/*/M" value="4" />
+            <Tab label="M/M/1" value="1" />
+            <Tab label="M/M/C" value="2" />
+            <Tab label="M/G/1" value="3" />
+            <Tab label="M/G/2" value="4" />
           </TabList>
         </Box>
         <TabPanel value="1"><MM1/></TabPanel>
-        <TabPanel value="2"><MG1/></TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
-        <TabPanel value="4">Item Three</TabPanel>
+        <TabPanel value="2"><MMC/></TabPanel>
+        <TabPanel value="3"><MG1/></TabPanel>
+        <TabPanel value="4"><MGC/></TabPanel>
       </TabContext>
     </Box>
   );

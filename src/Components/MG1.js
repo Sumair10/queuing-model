@@ -38,8 +38,8 @@ export default function MG1() {
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-    const newLemda = 1/lemda
-    const newMue = 1/mue
+    const newLemda = lemda
+    const newMue = mue
 
     const ro = newLemda / newMue
     const theta = (lemda**2 - mue**2) / 12 
