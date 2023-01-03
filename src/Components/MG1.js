@@ -21,7 +21,7 @@ import { useCountUp } from "react-countup";
 
 const theme = createTheme();
 
-export default function MMC() {
+export default function MG1() {
   const countUpRef = React.useRef(null);
   const [l, setL] = useState(0);
   const [lq, setLq] = useState(0);
@@ -38,10 +38,18 @@ export default function MMC() {
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-    setL(lemda / (mue - lemda));
-    setLq((lemda * lemda) / (mue / (mue - lemda)));
-    setW(1 / (mue - lemda));
-    setWq(lemda / (mue * (mue - lemda)));
+    const newLemda = 1/lemda
+    const newMue = 1/mue
+
+    const ro = newLemda / newMue
+    const theta = (lemda**2 - mue**2) / 12 
+
+
+
+    setLq((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)));
+    setWq( ((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)))/ newLemda);
+    setW((((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)))/ newLemda) + ( 1 / newMue));
+    setL(newLemda * ((((newLemda**2 * theta**2 + ro**2 ) / (2 * (1 - ro)))/ newLemda) + ( 1 / newMue)));
   };
 
   const [age, setAge] = React.useState("");
@@ -57,7 +65,7 @@ export default function MMC() {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
-            <Grid md={3}>
+            {/* <Grid md={3}>
               <Box
                 sx={{
                   borderRadius: 2,
@@ -82,7 +90,7 @@ export default function MMC() {
                   Number of servers in parallel open to attend customers.
                 </Typography>
               </Box>
-            </Grid>
+            </Grid> */}
             <Grid md={3}>
               {" "}
               <Box
