@@ -41,7 +41,7 @@ export default function MMC() {
     setL(lemda / (mue - lemda));
     setLq((lemda * lemda) / (mue / (mue - lemda)));
     setW(1 / (mue - lemda));
-    // setWq(lemda / (mue * (mue - lemda)));
+    setWq(lemda / (mue * (mue - lemda)));
   };
 
   const [age, setAge] = React.useState("");
