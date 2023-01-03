@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,26 +17,31 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CountUp from "react-countup";
-import { useCountUp } from 'react-countup';
+import { useCountUp } from "react-countup";
 
 const theme = createTheme();
 
 export default function MMC() {
-
-    const countUpRef = React.useRef(null);
-    const [l, setL] = useState(0)
+  const countUpRef = React.useRef(null);
+  const [l, setL] = useState(0);
+  const [lq, setLq] = useState(0);
+  const [w, setW] = useState(0);
+  const [wq, setWq] = useState(0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+    const mue = data.get("mue");
+    const lemda = data.get("lemda");
     console.log({
       servers: data.get("servers"),
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-    setL(data.get("servers")*data.get("mue")*data.get("lemda"))
-    
+    setL(lemda / (mue - lemda));
+    setLq((lemda * lemda) / (mue / (mue - lemda)));
+    setW(1 / (mue - lemda));
+    setWq(lemda / (mue * (mue - lemda)));
   };
 
   const [age, setAge] = React.useState("");
@@ -243,7 +248,22 @@ export default function MMC() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-              0{" "}
+              <CountUp
+                start={0}
+                end={lq}
+                duration={2}
+                separator=" "
+                decimals={5}
+                decimal="."
+                onEnd={() => console.log("Ended! 👏")}
+                onStart={() => console.log("Started! 💨")}
+              >
+                {({ countUpRef, start }) => (
+                  <div>
+                    <span ref={countUpRef} />
+                  </div>
+                )}
+              </CountUp>
               <Typography
                 sx={{
                   ml: 2,
@@ -289,7 +309,22 @@ export default function MMC() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-              0{" "}
+               <CountUp
+                start={0}
+                end={w}
+                duration={2}
+                separator=" "
+                decimals={5}
+                decimal="."
+                onEnd={() => console.log("Ended! 👏")}
+                onStart={() => console.log("Started! 💨")}
+              >
+                {({ countUpRef, start }) => (
+                  <div>
+                    <span ref={countUpRef} />
+                  </div>
+                )}
+              </CountUp>
               <Typography
                 sx={{
                   ml: 2,
@@ -334,7 +369,22 @@ export default function MMC() {
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
             >
-              0{" "}
+              <CountUp
+                start={0}
+                end={wq}
+                duration={2}
+                separator=" "
+                decimals={5}
+                decimal="."
+                onEnd={() => console.log("Ended! 👏")}
+                onStart={() => console.log("Started! 💨")}
+              >
+                {({ countUpRef, start }) => (
+                  <div>
+                    <span ref={countUpRef} />
+                  </div>
+                )}
+              </CountUp>
               <Typography
                 sx={{
                   ml: 2,
