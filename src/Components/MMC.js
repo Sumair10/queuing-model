@@ -38,7 +38,7 @@ export default function MMC() {
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-    // setL(lemda / (mue - lemda));
+    setL(lemda / (mue - lemda));
     // setLq((lemda * lemda) / (mue / (mue - lemda)));
     // setW(1 / (mue - lemda));
     // setWq(lemda / (mue * (mue - lemda)));
