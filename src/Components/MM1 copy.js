@@ -18,10 +18,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CountUp from "react-countup";
 import { useCountUp } from "react-countup";
+import { Doughnut } from "react-chartjs-2";
+import Alert from "@mui/material/Alert";
+import { Bar } from "./Bar";
 
 const theme = createTheme();
 
-export default function MG1() {
+export default function MM1() {
   const countUpRef = React.useRef(null);
   const [l, setL] = useState(0);
   const [lq, setLq] = useState(0);
@@ -33,16 +36,13 @@ export default function MG1() {
   const [serviceRate, setServiceRate] = useState("");
   const [lemda, setLemda] = useState(0);
   const [mue, setMue] = useState(0);
+  const [result, setResult] = useState("");
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
 
   const handleSubmit = (event) => {
-    setP(0);
-    setL(0);
-    setLq(0);
-    setW(0);
-    setWq(0);
+   
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
@@ -62,23 +62,11 @@ export default function MG1() {
     } else if (serviceRate === "" || arrivalRate === "") {
       alert("please select rates");
     } else {
-      const newLemda = lemda;
-      const newMue = mue;
-
-      const ro = newLemda / newMue;
-      const theta = (lemda ** 2 - mue ** 2) / 12;
-      setP(ro);
-      setLq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)));
-      setWq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda);
-      setW(
-        (newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda +
-          1 / newMue
-      );
-      setL(
-        newLemda *
-          ((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda +
-            1 / newMue)
-      );
+      setP(lemda / mue);
+      setL(lemda / (mue - lemda));
+      setLq((lemda * lemda) / (mue / (mue - lemda)));
+      setW(1 / (mue - lemda));
+      setWq(lemda / (mue * (mue - lemda)));
     }
   };
 
@@ -160,10 +148,64 @@ export default function MG1() {
     }
   };
 
+  const handleResultChange = (event) => {
+    setResult(event.target.value);
+     if (event.target.value === "Day") {
+      if (result === "Hour") {
+        setW( w* 24);
+        setWq( wq* 24);
+      } else if (result === "Minute") {
+        setW(w * 24 * 60);
+        setWq(wq * 24 * 60);
+      } else if (result === "Second") {
+        setW(w * 24 * 60 * 60);
+        setWq(wq * 24 * 60 * 60);
+      }
+      handleSubmit()
+    } else if (event.target.value === "Hour") {
+      if (result === "Day") {
+        setW(w / 24);
+        setWq(wq / 24);
+      } else if (result === "Minute") {
+        setW(w * 60);
+        setWq(wq * 60);
+      } else if (result === "Second") {
+        setW(w * 60 * 60);
+        setWq(wq * 60 * 60);
+      }
+      handleSubmit()
+    } else if (event.target.value === "Minute") {
+      if (result === "Day") {
+        setW(w / (24 * 60));
+        setWq(wq / (24 * 60));
+      } else if (result === "Hour") {
+        setW(w / 60);
+        setWq(wq / 60);
+      } else if (result === "Second") {
+        setW(w * 60);
+        setWq(wq * 60);
+      }
+      handleSubmit()
+    } else if (event.target.value === "Second") {
+      if (result === "Day") {
+        setW(w / (24 * 60 * 60));
+        setWq(wq / (24 * 60 * 60));
+      } else if (result === "Hour") {
+        setW(w / (60 * 60));
+        setWq(wq / (60 * 60));
+      } else if (result === "Minute") {
+        setW(w / 60);
+        setWq(wq / 60);
+      }
+      handleSubmit()
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
         <CssBaseline />
+        <Bar />
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
@@ -259,11 +301,36 @@ export default function MG1() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 2, mb: 5 }}
           >
             Calculate
           </Button>
         </Box>
+        <Typography
+          sx={{
+            fontSize: 30,
+            fontWeight: "bold",
+          }}
+        >
+          Result
+        </Typography>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Rate</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={result}
+            label="Rate"
+            onChange={handleResultChange}
+          >
+            <MenuItem value={"No units"}>No Units</MenuItem>
+            <MenuItem value={"Day"}>Customer / Day </MenuItem>
+            <MenuItem value={"Hour"}>Customer / Hour</MenuItem>
+            <MenuItem value={"Minute"}>Customer / Minute</MenuItem>
+            <MenuItem value={"Second"}>Customer / Second</MenuItem>
+          </Select>
+        </FormControl>
+
         <Box
           sx={{
             borderRadius: 2,

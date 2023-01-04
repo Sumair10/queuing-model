@@ -47,7 +47,7 @@ export default function MGC() {
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
     const lemda = data.get("lemda");
-    const servers = data.get("servers");
+    const servers = 2
 
     console.log({
       servers: data.get("servers"),

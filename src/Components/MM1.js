@@ -20,6 +20,7 @@ import CountUp from "react-countup";
 import { useCountUp } from "react-countup";
 import { Doughnut } from "react-chartjs-2";
 import Alert from "@mui/material/Alert";
+import { Bar } from "./Bar";
 
 const theme = createTheme();
 
@@ -157,6 +158,7 @@ export default function MM1() {
     <ThemeProvider theme={theme}>
       <Container component="main">
         <CssBaseline />
+        {/* <Bar/> */}
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
@@ -252,11 +254,17 @@ export default function MM1() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 2, mb: 5 }}
           >
             Calculate
           </Button>
         </Box>
+        <Typography sx={{
+          fontSize: 30, fontWeight: "bold",
+        }}>
+            Result
+          </Typography>
+
         <Box
           sx={{
             borderRadius: 2,
@@ -265,6 +273,7 @@ export default function MM1() {
             mb: 3,
           }}
         >
+         
           <Grid conatiner flexDirection="column">
             <Typography
               sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}

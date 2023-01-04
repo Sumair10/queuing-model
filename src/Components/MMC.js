@@ -22,7 +22,6 @@ import { useCountUp } from "react-countup";
 const theme = createTheme();
 
 export default function MMC() {
-
   const countUpRef = React.useRef(null);
   const [l, setL] = useState(0);
   const [lq, setLq] = useState(0);
@@ -59,7 +58,6 @@ export default function MMC() {
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
     } else if (data.get("lemda") >= data.get("mue")) {
-      
       alert(
         "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
       );
@@ -76,23 +74,36 @@ export default function MMC() {
           return num * factorialize(num - 1);
         }
       }
-  
-      const ro = lemda /( servers * mue)
-  
-      setP(ro)
-      setL(ro + ( (ro *( servers * ro )**servers) / ((1 - ro)**2 * factorialize(servers) ) ));
-      setW( ro + ( (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) ));
-      setWq(   (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) );
-      setLq(lemda *   (ro *( servers * ro )**servers) / (lemda * (1 - ro)**2 * factorialize(servers) ) );
+
+      const ro = lemda / (servers * mue);
+
+      setP(ro);
+      setL(
+        ro +
+          (ro * (servers * ro) ** servers) /
+            ((1 - ro) ** 2 * factorialize(servers))
+      );
+      setW(
+        ro +
+          (ro * (servers * ro) ** servers) /
+            (lemda * (1 - ro) ** 2 * factorialize(servers))
+      );
+      setWq(
+        (ro * (servers * ro) ** servers) /
+          (lemda * (1 - ro) ** 2 * factorialize(servers))
+      );
+      setLq(
+        (lemda * (ro * (servers * ro) ** servers)) /
+          (lemda * (1 - ro) ** 2 * factorialize(servers))
+      );
     }
   };
 
   const handleArrivalChange = (event) => {
     setArrivalRate(event.target.value);
-    if(event.target.value === "No units") {
+    if (event.target.value === "No units") {
       setLemda(0);
-    }
-    else if (event.target.value === "Day") {
+    } else if (event.target.value === "Day") {
       if (arrivalRate === "Hour") {
         setLemda(lemda * 24);
       } else if (arrivalRate === "Minute") {
@@ -129,10 +140,9 @@ export default function MMC() {
 
   const handleServiceChange = (event) => {
     setServiceRate(event.target.value);
-    if(event.target.value === "No units") {
+    if (event.target.value === "No units") {
       setMue(0);
-    }
-    else if (event.target.value === "Day") {
+    } else if (event.target.value === "Day") {
       if (serviceRate === "Hour") {
         setMue(mue * 24);
       } else if (serviceRate === "Minute") {
@@ -166,7 +176,7 @@ export default function MMC() {
       }
     }
   };
- 
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main">
@@ -174,7 +184,7 @@ export default function MMC() {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
-          <Grid md={3}>
+            <Grid md={3}>
               <Box
                 sx={{
                   borderRadius: 2,
@@ -598,6 +608,5 @@ export default function MMC() {
         </Box>
       </Container>
     </ThemeProvider>
-    
   );
 }
