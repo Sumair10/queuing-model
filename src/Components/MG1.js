@@ -64,7 +64,7 @@ export default function MG1() {
         "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
       );
     } else if (serviceRate === "" || arrivalRate === "") {
-      alert("please select rates");
+    //   alert("please select rates");
     } else {
     //   setShowResult(true);
 
