@@ -66,7 +66,7 @@ export default function MG1() {
     } else if (serviceRate === "" || arrivalRate === "") {
       alert("please select rates");
     } else {
-    //   setShowResult(true);
+      setShowResult(true);
 
       const newLemda = lemda;
       const newMue = mue;
