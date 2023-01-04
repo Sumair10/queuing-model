@@ -34,8 +34,7 @@ export default function MG1() {
   const [lemda, setLemda] = useState(0);
   const [mue, setMue] = useState(0);
 
-  const [showResult, setShowResult] = useState(false)
-
+  const [showResult, setShowResult] = useState(false);
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
@@ -67,14 +66,13 @@ export default function MG1() {
     } else if (serviceRate === "" || arrivalRate === "") {
       alert("please select rates");
     } else {
-
-      setShowResult(true)
+      setShowResult(true);
 
       const newLemda = lemda;
       const newMue = mue;
 
-      const ro = newLemda / newMue;
-      const theta = (maximum**2 - minimum**2) / 12;
+    //   const ro = newLemda / newMue;
+      const theta = (maximum ** 2 - minimum ** 2) / 12;
       setP(ro);
       setLq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)));
       setWq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)) / newLemda);
@@ -175,7 +173,7 @@ export default function MG1() {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
-          <Grid md={2}></Grid>
+            <Grid md={2}></Grid>
             <Grid md={3}>
               {" "}
               <Box
@@ -219,7 +217,7 @@ export default function MG1() {
                 </FormControl>
               </Box>
             </Grid>
-          <Grid md={2}></Grid>
+            <Grid md={2}></Grid>
 
             <Grid md={3}>
               {" "}
@@ -264,10 +262,10 @@ export default function MG1() {
                 </FormControl>
               </Box>
             </Grid>
-          <Grid md={2}></Grid>
-          <Grid md={2}></Grid>
-          
-          {/* <Grid md={2}></Grid> */}
+            <Grid md={2}></Grid>
+            <Grid md={2}></Grid>
+
+            {/* <Grid md={2}></Grid> */}
 
             <Grid md={3}>
               <Box
@@ -295,7 +293,7 @@ export default function MG1() {
                 </Typography> */}
               </Box>
             </Grid>
-          <Grid md={2}></Grid>
+            <Grid md={2}></Grid>
 
             <Grid md={3}>
               <Box
@@ -323,9 +321,7 @@ export default function MG1() {
                 </Typography> */}
               </Box>
             </Grid>
-          <Grid md={2}></Grid>
-
-          
+            <Grid md={2}></Grid>
           </Grid>
 
           <Button
@@ -338,320 +334,354 @@ export default function MG1() {
           </Button>
         </Box>
 
-        {
-            showResult ?
-            <>
-                 <Typography sx={{
-          fontSize: 30, fontWeight: "bold",
-        }}>
-            Result
-          </Typography>
-
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-         
-          <Grid conatiner flexDirection="column">
+        {showResult ? (
+          <>
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" ,color :'purple' }}
+              sx={{
+                fontSize: 30,
+                fontWeight: "bold",
+              }}
             >
-              <CountUp
-                start={0}
-                end={l}
-                duration={2}
-                separator=" "
-                decimals={5}
-                decimal="."
-                onEnd={() => console.log("Ended! 👏")}
-                onStart={() => console.log("Started! 💨")}
-              >
-                {({ countUpRef, start }) => (
-                  <div>
-                    <span ref={countUpRef} />
-                  </div>
-                )}
-              </CountUp>
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Customers
-              </Typography>
-            </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold",color :'purple' }}>
-              L{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Average Customers in System
-              </Typography>
+              Result
             </Typography>
 
-            <Typography sx={{ color: "gray" }}>
-              Average number of customers in the system.
-            </Typography>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-          <Grid conatiner flexDirection="column">
-            <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" ,color : 'skyblue' }}
+            <Box
+              sx={{
+                borderRadius: 2,
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                padding: 3,
+                mb: 3,
+              }}
             >
-              <CountUp
-                start={0}
-                end={lq}
-                duration={2}
-                separator=" "
-                decimals={5}
-                decimal="."
-                onEnd={() => console.log("Ended! 👏")}
-                onStart={() => console.log("Started! 💨")}
-              >
-                {({ countUpRef, start }) => (
-                  <div>
-                    <span ref={countUpRef} />
-                  </div>
-                )}
-              </CountUp>
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Customers
-              </Typography>
-            </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" ,color : 'skyblue'  }}>
-              Lq{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Average Customers in Queue
-              </Typography>
-            </Typography>
+              <Grid conatiner flexDirection="column">
+                <Typography
+                  sx={{
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    display: "inline-flex",
+                    color: "purple",
+                  }}
+                >
+                  <CountUp
+                    start={0}
+                    end={l}
+                    duration={2}
+                    separator=" "
+                    decimals={5}
+                    decimal="."
+                    onEnd={() => console.log("Ended! 👏")}
+                    onStart={() => console.log("Started! 💨")}
+                  >
+                    {({ countUpRef, start }) => (
+                      <div>
+                        <span ref={countUpRef} />
+                      </div>
+                    )}
+                  </CountUp>
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Customers
+                  </Typography>
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 25, fontWeight: "bold", color: "purple" }}
+                >
+                  L{" "}
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Average Customers in System
+                  </Typography>
+                </Typography>
 
-            <Typography sx={{ color: "gray" }}>
-              Average number of customers (entities) in the queue. In other
-              words the expected amount of customers waiting to be served.
-            </Typography>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-          <Grid conatiner flexDirection="column">
-            <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex", color :'green' }}
+                <Typography sx={{ color: "gray" }}>
+                  Average number of customers in the system.
+                </Typography>
+              </Grid>
+            </Box>
+            <Box
+              sx={{
+                borderRadius: 2,
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                padding: 3,
+                mb: 3,
+              }}
             >
-              <CountUp
-                start={0}
-                end={w}
-                duration={2}
-                separator=" "
-                decimals={5}
-                decimal="."
-                onEnd={() => console.log("Ended! 👏")}
-                onStart={() => console.log("Started! 💨")}
-              >
-                {({ countUpRef, start }) => (
-                  <div>
-                    <span ref={countUpRef} />
-                  </div>
-                )}
-              </CountUp>
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                {arrivalRate}
-              </Typography>
-            </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold", color :'green' }}>
-              W{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Average Time Spent in System
-              </Typography>
-            </Typography>
+              <Grid conatiner flexDirection="column">
+                <Typography
+                  sx={{
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    display: "inline-flex",
+                    color: "skyblue",
+                  }}
+                >
+                  <CountUp
+                    start={0}
+                    end={lq}
+                    duration={2}
+                    separator=" "
+                    decimals={5}
+                    decimal="."
+                    onEnd={() => console.log("Ended! 👏")}
+                    onStart={() => console.log("Started! 💨")}
+                  >
+                    {({ countUpRef, start }) => (
+                      <div>
+                        <span ref={countUpRef} />
+                      </div>
+                    )}
+                  </CountUp>
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Customers
+                  </Typography>
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 25, fontWeight: "bold", color: "skyblue" }}
+                >
+                  Lq{" "}
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Average Customers in Queue
+                  </Typography>
+                </Typography>
 
-            <Typography sx={{ color: "gray" }}>
-              Average time spent by a customer from arrival until fully served.
-            </Typography>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-          <Grid conatiner flexDirection="column">
-            <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex"  , color :'red'}}
+                <Typography sx={{ color: "gray" }}>
+                  Average number of customers (entities) in the queue. In other
+                  words the expected amount of customers waiting to be served.
+                </Typography>
+              </Grid>
+            </Box>
+            <Box
+              sx={{
+                borderRadius: 2,
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                padding: 3,
+                mb: 3,
+              }}
             >
-              <CountUp
-                start={0}
-                end={wq}
-                duration={2}
-                separator=" "
-                decimals={5}
-                decimal="."
-                onEnd={() => console.log("Ended! 👏")}
-                onStart={() => console.log("Started! 💨")}
-              >
-                {({ countUpRef, start }) => (
-                  <div>
-                    <span ref={countUpRef} />
-                  </div>
-                )}
-              </CountUp>
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                {serviceRate}
-              </Typography>
-            </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold"  , color :'red' }}>
-              Wq{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Average Time Waiting in Line
-              </Typography>
-            </Typography>
+              <Grid conatiner flexDirection="column">
+                <Typography
+                  sx={{
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    display: "inline-flex",
+                    color: "green",
+                  }}
+                >
+                  <CountUp
+                    start={0}
+                    end={w}
+                    duration={2}
+                    separator=" "
+                    decimals={5}
+                    decimal="."
+                    onEnd={() => console.log("Ended! 👏")}
+                    onStart={() => console.log("Started! 💨")}
+                  >
+                    {({ countUpRef, start }) => (
+                      <div>
+                        <span ref={countUpRef} />
+                      </div>
+                    )}
+                  </CountUp>
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    {arrivalRate}
+                  </Typography>
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 25, fontWeight: "bold", color: "green" }}
+                >
+                  W{" "}
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Average Time Spent in System
+                  </Typography>
+                </Typography>
 
-            <Typography sx={{ color: "gray" }}>
-              Average time it takes a customer to start being served.
-            </Typography>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            borderRadius: 2,
-            boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-            padding: 3,
-            mb: 3,
-          }}
-        >
-          <Grid conatiner flexDirection="column">
-            <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex"  ,color :'orange'}}
+                <Typography sx={{ color: "gray" }}>
+                  Average time spent by a customer from arrival until fully
+                  served.
+                </Typography>
+              </Grid>
+            </Box>
+            <Box
+              sx={{
+                borderRadius: 2,
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                padding: 3,
+                mb: 3,
+              }}
             >
-              <CountUp
-                start={0}
-                end={p}
-                duration={2}
-                separator=" "
-                decimals={5}
-                decimal="."
-                onEnd={() => console.log("Ended! 👏")}
-                onStart={() => console.log("Started! 💨")}
-              >
-                {({ countUpRef, start }) => (
-                  <div>
-                    <span ref={countUpRef} />
-                  </div>
-                )}
-              </CountUp>
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              ></Typography>
-            </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" ,color :'orange'}}>
-              ρ{" "}
-              <Typography
-                sx={{
-                  ml: 2,
-                  color: "gray",
-                  fontSize: 25,
-                  fontWeight: "normal",
-                  display: "inline-flex",
-                }}
-              >
-                Server Utilization
-              </Typography>
-            </Typography>
+              <Grid conatiner flexDirection="column">
+                <Typography
+                  sx={{
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    display: "inline-flex",
+                    color: "red",
+                  }}
+                >
+                  <CountUp
+                    start={0}
+                    end={wq}
+                    duration={2}
+                    separator=" "
+                    decimals={5}
+                    decimal="."
+                    onEnd={() => console.log("Ended! 👏")}
+                    onStart={() => console.log("Started! 💨")}
+                  >
+                    {({ countUpRef, start }) => (
+                      <div>
+                        <span ref={countUpRef} />
+                      </div>
+                    )}
+                  </CountUp>
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    {serviceRate}
+                  </Typography>
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 25, fontWeight: "bold", color: "red" }}
+                >
+                  Wq{" "}
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Average Time Waiting in Line
+                  </Typography>
+                </Typography>
 
-            <Typography sx={{ color: "gray" }}>
-              Percentage of time a server is being utilized by a customer.{" "}
-            </Typography>
-          </Grid>
-        </Box>
-            </>
-            
-            : null
-        }
-   
+                <Typography sx={{ color: "gray" }}>
+                  Average time it takes a customer to start being served.
+                </Typography>
+              </Grid>
+            </Box>
+            <Box
+              sx={{
+                borderRadius: 2,
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                padding: 3,
+                mb: 3,
+              }}
+            >
+              <Grid conatiner flexDirection="column">
+                <Typography
+                  sx={{
+                    fontSize: 25,
+                    fontWeight: "bold",
+                    display: "inline-flex",
+                    color: "orange",
+                  }}
+                >
+                  <CountUp
+                    start={0}
+                    end={p}
+                    duration={2}
+                    separator=" "
+                    decimals={5}
+                    decimal="."
+                    onEnd={() => console.log("Ended! 👏")}
+                    onStart={() => console.log("Started! 💨")}
+                  >
+                    {({ countUpRef, start }) => (
+                      <div>
+                        <span ref={countUpRef} />
+                      </div>
+                    )}
+                  </CountUp>
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  ></Typography>
+                </Typography>
+                <Typography
+                  sx={{ fontSize: 25, fontWeight: "bold", color: "orange" }}
+                >
+                  ρ{" "}
+                  <Typography
+                    sx={{
+                      ml: 2,
+                      color: "gray",
+                      fontSize: 25,
+                      fontWeight: "normal",
+                      display: "inline-flex",
+                    }}
+                  >
+                    Server Utilization
+                  </Typography>
+                </Typography>
+
+                <Typography sx={{ color: "gray" }}>
+                  Percentage of time a server is being utilized by a customer.{" "}
+                </Typography>
+              </Grid>
+            </Box>
+          </>
+        ) : null}
       </Container>
     </ThemeProvider>
   );
