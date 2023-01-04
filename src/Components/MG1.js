@@ -71,7 +71,7 @@ export default function MG1() {
       const newLemda = lemda;
       const newMue = mue;
 
-    //   const ro = newLemda / newMue;
+      const ro = newLemda / newMue;
       const theta = (maximum ** 2 - minimum ** 2) / 12;
       setP(ro);
       setLq((newLemda ** 2 * theta ** 2 + ro ** 2) / (2 * (1 - ro)));
