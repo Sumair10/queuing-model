@@ -33,6 +33,8 @@ export default function MMC() {
   const [serviceRate, setServiceRate] = useState("");
   const [lemda, setLemda] = useState(0);
   const [mue, setMue] = useState(0);
+  const [showResult, setShowResult] = useState(false)
+
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
@@ -64,6 +66,8 @@ export default function MMC() {
     } else if (serviceRate === "" || arrivalRate === "") {
       alert("please select rates");
     } else {
+
+      setShowResult(true)
       function factorialize(num) {
         // If the number is less than 0, reject it.
         if (num < 0) return -1;
@@ -307,6 +311,15 @@ export default function MMC() {
             Calculate
           </Button>
         </Box>
+        {
+          showResult ?
+          <>
+            <Typography sx={{
+          fontSize: 30, fontWeight: "bold",
+        }}>
+            Result
+          </Typography>
+
         <Box
           sx={{
             borderRadius: 2,
@@ -315,9 +328,10 @@ export default function MMC() {
             mb: 3,
           }}
         >
+         
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" ,color :'purple' }}
             >
               <CountUp
                 start={0}
@@ -347,7 +361,7 @@ export default function MMC() {
                 Customers
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold",color :'purple' }}>
               L{" "}
               <Typography
                 sx={{
@@ -377,7 +391,7 @@ export default function MMC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" ,color : 'skyblue' }}
             >
               <CountUp
                 start={0}
@@ -407,7 +421,7 @@ export default function MMC() {
                 Customers
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold" ,color : 'skyblue'  }}>
               Lq{" "}
               <Typography
                 sx={{
@@ -438,7 +452,7 @@ export default function MMC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex", color :'green' }}
             >
               <CountUp
                 start={0}
@@ -468,7 +482,7 @@ export default function MMC() {
                 {arrivalRate}
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold", color :'green' }}>
               W{" "}
               <Typography
                 sx={{
@@ -498,7 +512,7 @@ export default function MMC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex"  , color :'red'}}
             >
               <CountUp
                 start={0}
@@ -528,7 +542,7 @@ export default function MMC() {
                 {serviceRate}
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold"  , color :'red' }}>
               Wq{" "}
               <Typography
                 sx={{
@@ -558,7 +572,7 @@ export default function MMC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex"  ,color :'orange'}}
             >
               <CountUp
                 start={0}
@@ -586,7 +600,7 @@ export default function MMC() {
                 }}
               ></Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold" ,color :'orange'}}>
               ρ{" "}
               <Typography
                 sx={{
@@ -606,6 +620,11 @@ export default function MMC() {
             </Typography>
           </Grid>
         </Box>
+          </>
+          
+          : null
+        }
+      
       </Container>
     </ThemeProvider>
   );

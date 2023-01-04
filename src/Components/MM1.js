@@ -20,7 +20,7 @@ import CountUp from "react-countup";
 import { useCountUp } from "react-countup";
 import { Doughnut } from "react-chartjs-2";
 import Alert from "@mui/material/Alert";
-import { Bar } from "./Bar";
+// import { Bar } from "./Bar";
 
 const theme = createTheme();
 
@@ -36,11 +36,25 @@ export default function MM1() {
   const [serviceRate, setServiceRate] = useState("");
   const [lemda, setLemda] = useState(0);
   const [mue, setMue] = useState(0);
+  const [barChart, setBarChart] = useState([]);
+  const [showResult, setShowResult] = useState(false)
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
 
+  function generateIntervalsOf(start, end) {
+    const result = [];
+
+    for (let index = 0; index < 10; index++) {
+      result.push(Math.random().toFixed(2));
+    }
+    console.log(result.sort((a, b) => a - b));
+    setBarChart(result);
+    return result;
+  }
+
   const handleSubmit = (event) => {
+
     setP(0);
     setL(0);
     setLq(0);
@@ -59,27 +73,28 @@ export default function MM1() {
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
     } else if (data.get("lemda") >= data.get("mue")) {
-      
       alert(
         "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
       );
     } else if (serviceRate === "" || arrivalRate === "") {
       alert("please select rates");
     } else {
+      setShowResult(true)
       setP(lemda / mue);
       setL(lemda / (mue - lemda));
       setLq((lemda * lemda) / (mue / (mue - lemda)));
       setW(1 / (mue - lemda));
       setWq(lemda / (mue * (mue - lemda)));
+      const a = generateIntervalsOf(0.1, 0, 10);
+      console.log("randam no ", a);
     }
   };
 
   const handleArrivalChange = (event) => {
     setArrivalRate(event.target.value);
-    if(event.target.value === "No units") {
+    if (event.target.value === "No units") {
       setLemda(0);
-    }
-    else if (event.target.value === "Day") {
+    } else if (event.target.value === "Day") {
       if (arrivalRate === "Hour") {
         setLemda(lemda * 24);
       } else if (arrivalRate === "Minute") {
@@ -116,10 +131,9 @@ export default function MM1() {
 
   const handleServiceChange = (event) => {
     setServiceRate(event.target.value);
-    if(event.target.value === "No units") {
+    if (event.target.value === "No units") {
       setMue(0);
-    }
-    else if (event.target.value === "Day") {
+    } else if (event.target.value === "Day") {
       if (serviceRate === "Hour") {
         setMue(mue * 24);
       } else if (serviceRate === "Minute") {
@@ -158,7 +172,7 @@ export default function MM1() {
     <ThemeProvider theme={theme}>
       <Container component="main">
         <CssBaseline />
-        {/* <Bar/> */}
+        {/* <Bar value ={barChart}/> */}
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
@@ -259,11 +273,18 @@ export default function MM1() {
             Calculate
           </Button>
         </Box>
-        <Typography sx={{
-          fontSize: 30, fontWeight: "bold",
-        }}>
-            Result
-          </Typography>
+
+        {
+          showResult ?
+          <>
+            <Typography
+          sx={{
+            fontSize: 30,
+            fontWeight: "bold",
+          }}
+        >
+          Result
+        </Typography>
 
         <Box
           sx={{
@@ -273,10 +294,14 @@ export default function MM1() {
             mb: 3,
           }}
         >
-         
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{
+                fontSize: 25,
+                fontWeight: "bold",
+                display: "inline-flex",
+                color: "purple",
+              }}
             >
               <CountUp
                 start={0}
@@ -306,7 +331,9 @@ export default function MM1() {
                 Customers
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography
+              sx={{ fontSize: 25, fontWeight: "bold", color: "purple" }}
+            >
               L{" "}
               <Typography
                 sx={{
@@ -336,7 +363,12 @@ export default function MM1() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{
+                fontSize: 25,
+                fontWeight: "bold",
+                display: "inline-flex",
+                color: "skyblue",
+              }}
             >
               <CountUp
                 start={0}
@@ -366,7 +398,9 @@ export default function MM1() {
                 Customers
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography
+              sx={{ fontSize: 25, fontWeight: "bold", color: "skyblue" }}
+            >
               Lq{" "}
               <Typography
                 sx={{
@@ -397,7 +431,12 @@ export default function MM1() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{
+                fontSize: 25,
+                fontWeight: "bold",
+                display: "inline-flex",
+                color: "green",
+              }}
             >
               <CountUp
                 start={0}
@@ -427,7 +466,9 @@ export default function MM1() {
                 {arrivalRate}
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography
+              sx={{ fontSize: 25, fontWeight: "bold", color: "green" }}
+            >
               W{" "}
               <Typography
                 sx={{
@@ -457,7 +498,12 @@ export default function MM1() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{
+                fontSize: 25,
+                fontWeight: "bold",
+                display: "inline-flex",
+                color: "red",
+              }}
             >
               <CountUp
                 start={0}
@@ -487,7 +533,7 @@ export default function MM1() {
                 {serviceRate}
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold", color: "red" }}>
               Wq{" "}
               <Typography
                 sx={{
@@ -517,7 +563,12 @@ export default function MM1() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{
+                fontSize: 25,
+                fontWeight: "bold",
+                display: "inline-flex",
+                color: "orange",
+              }}
             >
               <CountUp
                 start={0}
@@ -545,7 +596,9 @@ export default function MM1() {
                 }}
               ></Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography
+              sx={{ fontSize: 25, fontWeight: "bold", color: "orange" }}
+            >
               ρ{" "}
               <Typography
                 sx={{
@@ -565,6 +618,12 @@ export default function MM1() {
             </Typography>
           </Grid>
         </Box>
+          </>
+          
+          : null
+        }
+
+      
       </Container>
     </ThemeProvider>
   );

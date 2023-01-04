@@ -34,6 +34,9 @@ export default function MGC() {
   const [lemda, setLemda] = useState(0);
   const [mue, setMue] = useState(0);
 
+  const [showResult, setShowResult] = useState(false)
+
+
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
 
@@ -47,6 +50,8 @@ export default function MGC() {
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
     const lemda = data.get("lemda");
+    const minimum = data.get("minimum");
+    const maximum = data.get("maximum");
     const servers = 2
 
     console.log({
@@ -64,6 +69,7 @@ export default function MGC() {
     } else if (serviceRate === "" || arrivalRate === "") {
       alert("please select rates");
     } else {
+      setShowResult(true)
       function factorialize(num) {
         // If the number is less than 0, reject it.
         if (num < 0) return -1;
@@ -178,7 +184,9 @@ export default function MGC() {
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <Grid container flexDirection="row" justifyContent="space-evenly">
-            <Grid md={3}>
+          <Grid md={1}></Grid>
+
+            <Grid md={10}>
               <Box
                 sx={{
                   borderRadius: 2,
@@ -206,7 +214,11 @@ export default function MGC() {
                 </Typography>
               </Box>
             </Grid>
-            <Grid md={3}>
+            <Grid md={1}></Grid>
+            <Grid md={1}></Grid>
+
+
+            <Grid md={4}>
               {" "}
               <Box
                 sx={{
@@ -249,7 +261,9 @@ export default function MGC() {
                 </FormControl>
               </Box>
             </Grid>
-            <Grid md={3}>
+            <Grid md={2}></Grid>
+
+            <Grid md={4}>
               {" "}
               <Box
                 sx={{
@@ -292,6 +306,68 @@ export default function MGC() {
                 </FormControl>
               </Box>
             </Grid>
+            <Grid md={1}></Grid>
+            <Grid md={1}></Grid>
+          
+          {/* <Grid md={2}></Grid> */}
+
+            <Grid md={4}>
+              <Box
+                sx={{
+                  borderRadius: 2,
+                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                  padding: 3,
+                  mb: 5,
+                }}
+              >
+                <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+                  Minimum
+                </Typography>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="minimum"
+                  label="Enter minimum value"
+                  name="minimum"
+                  type="number"
+                />
+                {/* <Typography sx={{ color: "gray", fontSize: 10 }}>
+                  Number of servers in parallel open to attend customers.
+                </Typography> */}
+              </Box>
+            </Grid>
+          <Grid md={2}></Grid>
+
+            <Grid md={4}>
+              <Box
+                sx={{
+                  borderRadius: 2,
+                  boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                  padding: 3,
+                  mb: 5,
+                }}
+              >
+                <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+                  Maximum
+                </Typography>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="maximum"
+                  label="Enter maximum value"
+                  name="maximum"
+                  type="number"
+                />
+                {/* <Typography sx={{ color: "gray", fontSize: 10 }}>
+                  Number of servers in parallel open to attend customers.
+                </Typography> */}
+              </Box>
+            </Grid>
+            
+          <Grid md={1}></Grid>
+
           </Grid>
 
           <Button
@@ -303,6 +379,17 @@ export default function MGC() {
             Calculate
           </Button>
         </Box>
+
+        {
+          showResult ?
+          
+          <>
+              <Typography sx={{
+          fontSize: 30, fontWeight: "bold",
+        }}>
+            Result
+          </Typography>
+
         <Box
           sx={{
             borderRadius: 2,
@@ -311,9 +398,10 @@ export default function MGC() {
             mb: 3,
           }}
         >
+         
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" ,color :'purple' }}
             >
               <CountUp
                 start={0}
@@ -343,7 +431,7 @@ export default function MGC() {
                 Customers
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold",color :'purple' }}>
               L{" "}
               <Typography
                 sx={{
@@ -373,7 +461,7 @@ export default function MGC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" ,color : 'skyblue' }}
             >
               <CountUp
                 start={0}
@@ -403,7 +491,7 @@ export default function MGC() {
                 Customers
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold" ,color : 'skyblue'  }}>
               Lq{" "}
               <Typography
                 sx={{
@@ -434,7 +522,7 @@ export default function MGC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex", color :'green' }}
             >
               <CountUp
                 start={0}
@@ -464,7 +552,7 @@ export default function MGC() {
                 {arrivalRate}
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold", color :'green' }}>
               W{" "}
               <Typography
                 sx={{
@@ -494,7 +582,7 @@ export default function MGC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex"  , color :'red'}}
             >
               <CountUp
                 start={0}
@@ -524,7 +612,7 @@ export default function MGC() {
                 {serviceRate}
               </Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold"  , color :'red' }}>
               Wq{" "}
               <Typography
                 sx={{
@@ -554,7 +642,7 @@ export default function MGC() {
         >
           <Grid conatiner flexDirection="column">
             <Typography
-              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex" }}
+              sx={{ fontSize: 25, fontWeight: "bold", display: "inline-flex"  ,color :'orange'}}
             >
               <CountUp
                 start={0}
@@ -582,7 +670,7 @@ export default function MGC() {
                 }}
               ></Typography>
             </Typography>
-            <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
+            <Typography sx={{ fontSize: 25, fontWeight: "bold" ,color :'orange'}}>
               ρ{" "}
               <Typography
                 sx={{
@@ -602,6 +690,10 @@ export default function MGC() {
             </Typography>
           </Grid>
         </Box>
+          </>
+          : null
+        }
+    
       </Container>
     </ThemeProvider>
   );
