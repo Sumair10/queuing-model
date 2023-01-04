@@ -58,7 +58,7 @@ export default function MG1() {
     });
 
     if (data.get("lemda") === "" || data.get("mue") === "") {
-    //   alert("Please enter required values");
+      alert("Please enter required values");
     } else if (data.get("lemda") >= data.get("mue")) {
       alert(
         "The queues will tend to infinity as Lambda is greater or equal than 2 times Mu"
