@@ -23,7 +23,7 @@ export default function LabTabs() {
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="M/M/1" value="1" />
             <Tab label="M/M/C" value="2" />
-            <Tab label="M/G/C" value="3" />
+            <Tab label="M/G/1" value="3" />
             {/* <Tab label="M/G/2" value="4" /> */}
           </TabList>
         </Box>
