@@ -80,7 +80,7 @@ export default function MGC() {
       var CSquareA = varianceOfInterArrival / (1 / lemda ** 2);
       var CSquareS = varianceOfServiceTime / (1 / miu ** 2);
       var listInQueue =
-        // (ro ** 2 * (1 + CSquareS) * (CSquareA + ro ** 2 * CSquareS)) /
+        (ro ** 2 * (1 + CSquareS) * (CSquareA + ro ** 2 * CSquareS)) /
         (2 * (1 - ro) * (1 + ro ** 2) * CSquareS);
       var waitInQueue = listInQueue / lemda;
       var waitInSystem = waitInQueue + 1 / miu;
