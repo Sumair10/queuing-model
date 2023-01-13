@@ -84,7 +84,7 @@ export default function MGC() {
         (2 * (1 - ro) * (1 + ro ** 2) * CSquareS);
       var waitInQueue = listInQueue / lemda;
       var waitInSystem = waitInQueue + 1 / miu;
-      // var listInSystem = lemda * waitInSystem;
+      var listInSystem = lemda * waitInSystem;
       var idelServerProb = (1 - ro) * 100;
 
       setLq(listInQueue);
