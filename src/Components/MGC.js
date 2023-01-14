@@ -87,7 +87,7 @@ export default function MGC() {
       var listInSystem = lemda * waitInSystem;
       var idelServerProb = (1 - ro) * 100;
 
-      setLq(listInQueue);
+      // setLq(listInQueue);
       setWq(waitInQueue);
       setW(waitInSystem);
       setL(listInSystem);
