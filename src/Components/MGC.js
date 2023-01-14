@@ -94,7 +94,7 @@ export default function MGC() {
       setP(idelServerProb)
 
       git add .
-      git commit -m 
+      git commit -m
     }
   };
 
