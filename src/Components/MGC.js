@@ -92,8 +92,7 @@ export default function MGC() {
       setW(waitInSystem);
       setL(listInSystem);
       setP(idelServerProb)
-
-      gir
+      
     }
   };
 
