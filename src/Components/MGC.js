@@ -95,7 +95,6 @@ export default function MGC() {
 
       git add .
       git commit -m "MMC"
-      git
     }
   };
 
