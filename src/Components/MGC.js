@@ -93,7 +93,7 @@ export default function MGC() {
       setL(listInSystem);
       setP(idelServerProb)
 
-      git
+      gi
     }
   };
 
