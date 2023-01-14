@@ -92,6 +92,10 @@ export default function MGC() {
       setW(waitInSystem);
       setL(listInSystem);
       setP(idelServerProb)
+
+      git add .
+      git commit -m "MMC"
+      git
     }
   };
 
