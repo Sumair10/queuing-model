@@ -40,11 +40,6 @@ export default function MGC() {
   const [errorMessage, setErrorMessage] = useState("please enter");
 
   const handleSubmit = (event) => {
-    // setP(0);
-    // setL(0);
-    // setLq(0);
-    // setW(0);
-    // setWq(0);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const ia = data.get("lemda");
@@ -92,6 +87,8 @@ export default function MGC() {
       setW(waitInSystem);
       setL(listInSystem);
       setP(idelServerProb)
+
+      
       
     }
   };
