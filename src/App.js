@@ -10,7 +10,6 @@ function App() {
 
     git add .
     git commit -m "MMC"
-    git
   );
 }
 
