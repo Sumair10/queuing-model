@@ -9,7 +9,7 @@ function App() {
     </div>
 
     git add .
-    git commit -m "MMC"
+    git commit -m ""
   );
 }
 
