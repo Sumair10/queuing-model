@@ -9,7 +9,6 @@ function App() {
     </div>
 
     git add .
-    git
   );
 }
 
