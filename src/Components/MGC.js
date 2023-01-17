@@ -85,7 +85,7 @@ export default function MGC() {
       // setLq(listInQueue);
       // setWq(waitInQueue);
       setW(waitInSystem);
-      // setL(listInSystem);
+      setL(listInSystem);
       setP(idelServerProb)
 
       
