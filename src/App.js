@@ -7,8 +7,7 @@ function App() {
     <Header/>
     <Pages/>
     </div>
-
-    git
+    
   );
 }
 
