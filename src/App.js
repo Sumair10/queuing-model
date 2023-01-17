@@ -8,7 +8,7 @@ function App() {
     <Pages/>
     </div>
 
-    git add .
+    git add .App
   );
 }
 
