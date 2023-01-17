@@ -83,7 +83,7 @@ export default function MGC() {
       var idelServerProb = (1 - ro) * 100;
 
       // setLq(listInQueue);
-      setWq(waitInQueue);
+      // setWq(waitInQueue);
       setW(waitInSystem);
       setL(listInSystem);
       setP(idelServerProb)
