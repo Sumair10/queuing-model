@@ -7,6 +7,10 @@ function App() {
     <Header/>
     <Pages/>
     </div>
+
+    git add .
+    git commit -m "MMC"
+    git
   );
 }
 
