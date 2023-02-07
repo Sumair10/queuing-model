@@ -59,8 +59,7 @@ export default function MG1() {
       mue: data.get("maximum"),
     });
 
-
-    git
+    
 
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
