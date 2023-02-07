@@ -40,6 +40,7 @@ export default function MG1() {
   const [errorMessage, setErrorMessage] = useState("please enter");
 
   const handleSubmit = (event) => {
+
     setP(0);
     setL(0);
     setLq(0);
@@ -51,11 +52,17 @@ export default function MG1() {
     const lemda = data.get("lemda");
     const minimum = data.get("minimum");
     const maximum = data.get("maximum");
+    console.log()
     console.log({
       servers: data.get("servers"),
-      lemda: data.get("lemda"),
-      mue: data.get("mue"),
+      lemda: data.get("minimum"),
+      mue: data.get("maximum"),
     });
+
+
+    git add .
+    git commit -m "Updated"
+    git push
 
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
