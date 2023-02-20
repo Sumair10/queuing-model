@@ -57,7 +57,7 @@ export default function MG1() {
       servers: data.get("servers"),
       lemda: data.get("minimum"),
       mue: data.get("maximum"),
-    })
+    });
 
     
 
