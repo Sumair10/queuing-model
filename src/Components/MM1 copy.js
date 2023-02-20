@@ -31,18 +31,15 @@ export default function MM1() {
   const [w, setW] = useState(0);
   const [wq, setWq] = useState(0);
   const [p, setP] = useState(0);
-
   const [arrivalRate, setArrivalRate] = useState("");
   const [serviceRate, setServiceRate] = useState("");
   const [lemda, setLemda] = useState(0);
   const [mue, setMue] = useState(0);
   const [result, setResult] = useState("");
-
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("please enter");
 
   const handleSubmit = (event) => {
-   
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const mue = data.get("mue");
@@ -52,7 +49,6 @@ export default function MM1() {
       lemda: data.get("lemda"),
       mue: data.get("mue"),
     });
-
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
     } else if (data.get("lemda") >= data.get("mue")) {
@@ -150,10 +146,10 @@ export default function MM1() {
 
   const handleResultChange = (event) => {
     setResult(event.target.value);
-     if (event.target.value === "Day") {
+    if (event.target.value === "Day") {
       if (result === "Hour") {
-        setW( w* 24);
-        setWq( wq* 24);
+        setW(w * 24);
+        setWq(wq * 24);
       } else if (result === "Minute") {
         setW(w * 24 * 60);
         setWq(wq * 24 * 60);
@@ -161,7 +157,7 @@ export default function MM1() {
         setW(w * 24 * 60 * 60);
         setWq(wq * 24 * 60 * 60);
       }
-      handleSubmit()
+      handleSubmit();
     } else if (event.target.value === "Hour") {
       if (result === "Day") {
         setW(w / 24);
@@ -173,7 +169,7 @@ export default function MM1() {
         setW(w * 60 * 60);
         setWq(wq * 60 * 60);
       }
-      handleSubmit()
+      handleSubmit();
     } else if (event.target.value === "Minute") {
       if (result === "Day") {
         setW(w / (24 * 60));
@@ -185,7 +181,7 @@ export default function MM1() {
         setW(w * 60);
         setWq(wq * 60);
       }
-      handleSubmit()
+      handleSubmit();
     } else if (event.target.value === "Second") {
       if (result === "Day") {
         setW(w / (24 * 60 * 60));
@@ -197,7 +193,7 @@ export default function MM1() {
         setW(w / 60);
         setWq(wq / 60);
       }
-      handleSubmit()
+      handleSubmit();
     }
   };
 
