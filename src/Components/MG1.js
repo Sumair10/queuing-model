@@ -59,7 +59,9 @@ export default function MG1() {
       mue: data.get("maximum"),
     })
 
-    
+    git add .
+  git commit -m "a"
+  git push
 
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
