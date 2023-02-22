@@ -61,7 +61,6 @@ export default function MG1() {
 
     git add .
   git commit -m "a"
-  git
 
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
