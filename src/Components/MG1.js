@@ -689,4 +689,4 @@ export default function MG1() {
   );
 }
 
-git add .
+git add
