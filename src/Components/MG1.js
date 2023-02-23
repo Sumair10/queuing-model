@@ -59,9 +59,6 @@ export default function MG1() {
       mue: data.get("maximum"),
     })
 
-    git add .
-  git commit -m 
-
     if (data.get("lemda") === "" || data.get("mue") === "") {
       alert("Please enter required values");
     } else if (data.get("lemda") >= data.get("mue")) {
@@ -691,3 +688,7 @@ export default function MG1() {
     </ThemeProvider>
   );
 }
+
+git add .
+git commit -m "a"
+git push
