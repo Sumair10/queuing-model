@@ -688,5 +688,3 @@ export default function MG1() {
     </ThemeProvider>
   );
 }
-
-git
